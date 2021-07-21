@@ -17,3 +17,31 @@ exports.bicicleta_create_post = function(req, res){
     
     res.redirect('/bicicletas');
 }
+
+// Update get:
+exports.bicicleta_update_get = function(req,res){
+    var bici = Bicicleta.findById(req.params.id);
+    
+    res.render('bicicletas/update', {bici} );
+}
+
+//Luego del paso arriba vamos a crearla
+exports.bicicleta_update_post = function(req, res){
+    var bici = Bicicleta.findById(req.params.id);
+    bici.id = req.body.id;
+    bici.color = req.body.color;
+    bici.modelo = req.body.modelo;
+    bici.ubicacion = [req.body.lat, req.body.lng];
+    Bicicleta.add(bici);
+    
+    res.redirect('/bicicletas');
+}
+
+
+//Controlador de eliminacion de bicileta
+exports.bicicleta_delete_post = function(req, res){
+    Bicicleta.removeById(req.body.id);
+
+    res.redirect('/bicicletas');
+
+}
